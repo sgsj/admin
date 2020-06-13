@@ -1,0 +1,69 @@
+<template>
+  <q-page class="flex flex-center">
+    <q-card>
+      <q-card-section>
+        <q-form
+          @submit="onSubmit"
+          @reset="onReset"
+          class="q-gutter-md"
+        >
+          <q-input
+            ref="input"
+            v-model="name"
+            label="名称*"
+            hint="填写管理员账号"
+            :rules="[
+              val => val.length > 0 || '请输入账号'
+            ]"
+          />
+
+          <q-input
+            type="password"
+            v-model="password"
+            label="密码"
+            :rules="[
+              val => val.length > 0 || '请输入密码'
+            ]"
+          />
+
+          <q-toggle v-model="accept" label="I accept the license and terms" />
+
+          <div>
+            <!-- <q-btn class="q-mt-sm" label="Reset Validation" @click="reset" color="primary"/> -->
+            <q-btn label="登录" type="submit" color="primary"/>
+            <q-btn label="注册" type="reset" color="primary" flat class="q-ml-sm" />
+          </div>
+        </q-form>
+      </q-card-section>
+    </q-card>
+  </q-page>
+</template>
+
+<script>
+import Axios from 'axios'
+export default {
+  name: 'PageTool',
+  data () {
+    return {
+      name: '',
+      password: ''
+    }
+  },
+  methods: {
+    onReset () {
+      this.$router.push('/register')
+    },
+    onSubmit () {
+      Axios.post('login/submit', {
+        name: this.name,
+        password: this.password
+      }).then((response) => {
+        alert(response)
+        console.log(response)
+        this.$store.state
+        // this.$router.push('/index')
+      })
+    }
+  }
+}
+</script>
