@@ -26,7 +26,7 @@
             ]"
           />
 
-          <q-toggle v-model="accept" label="I accept the license and terms" />
+          <q-btn label="忘记密码？" to="/findUser" class="text-body2 float-right" flat/>
 
           <div>
             <!-- <q-btn class="q-mt-sm" label="Reset Validation" @click="reset" color="primary"/> -->
@@ -60,7 +60,7 @@ export default {
       }).then((response) => {
         alert(response)
         console.log(response)
-        this.$store.state
+        // this.$store.state
         // this.$router.push('/index')
       })
     }

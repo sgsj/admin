@@ -1,6 +1,6 @@
 import Vue from 'vue'
 import Vuex from 'vuex'
-import LocalStorage from 'quasar'
+import { LocalStorage } from 'quasar'
 
 // import example from './module-example'
 
@@ -18,7 +18,7 @@ Vue.use(Vuex)
 export default function (/* { ssrContext } */) {
   const Store = new Vuex.Store({
     state: {
-      user_state: LocalStorage.get.item()
+      user_state: LocalStorage.getItem('user_token')
     },
     modules: {
       // example
