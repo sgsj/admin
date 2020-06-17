@@ -4,7 +4,7 @@
       <q-btn icon="add" color="primary" @click="addToolForm = true"></q-btn>
     </div>
     <div class="row justify-around col">
-      <q-card class="tool-item" bordered v-for="(tool , index) in tools" :key="tool.title" v-bind="tool">
+      <q-card class="tool-item" bordered v-for="(tool , index) in tools" :key="tool.title" v-bind="tool" style="width: 232px;">
         <q-img
           :src="tool.imgUrl"
         />
@@ -46,6 +46,9 @@
             @reset="onCancel"
             class="q-gutter-md"
           >
+            <q-uploader
+              @added='imgUpload'
+            />
             <q-input
               type="text"
               v-model="addTooldata.name"
@@ -96,6 +99,7 @@ export default {
       operationIndex: null,
       addToolForm: false,
       addTooldata: {
+        img: null,
         name: '',
         brief: '',
         url: ''
@@ -122,6 +126,9 @@ export default {
       ]
     }
   },
+  created: function () {
+    Axios.get('/gettools').then()
+  },
   methods: {
     del (index) {
       this.confirm = true
@@ -137,6 +144,9 @@ export default {
       // var re = new RegExp(zhengze)
       // re.test()
       return true
+    },
+    imgUpload (list) {
+      console.log(list)
     },
     onSubmit () {
       Axios.post('/addtool', this.addTooldata).then((response) => {

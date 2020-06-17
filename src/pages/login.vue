@@ -1,6 +1,6 @@
 <template>
   <q-page class="flex flex-center">
-    <q-card>
+    <q-card style="width: 232px;">
       <q-card-section>
         <q-form
           @submit="onSubmit"
@@ -26,7 +26,7 @@
             ]"
           />
 
-          <q-btn label="忘记密码？" to="/findUser" class="text-body2 float-right" flat/>
+          <q-btn label="忘记密码？" to="/findUser" class="text-body2 text-right" flat/>
 
           <div>
             <!-- <q-btn class="q-mt-sm" label="Reset Validation" @click="reset" color="primary"/> -->
@@ -58,10 +58,16 @@ export default {
         name: this.name,
         password: this.password
       }).then((response) => {
-        alert(response)
+        if (response.data.code === 200) {
+          this.$q.localStorage.set('userkey', response.data.userkey)
+          this.$router.push('/index')
+        } else {
+          alert(response.data.msg)
+        }
         console.log(response)
         // this.$store.state
-        // this.$router.push('/index')
+      }).catch((response) => {
+
       })
     }
   }
