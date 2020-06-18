@@ -127,7 +127,10 @@ export default {
     }
   },
   created: function () {
-    Axios.get('/gettools').then()
+    console.log('页面显示前获取数据：', this.tools)
+    Axios.get('admin/gettools').then((response) => {
+      console.log(response)
+    })
   },
   methods: {
     del (index) {

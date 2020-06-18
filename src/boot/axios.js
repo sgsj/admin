@@ -1,6 +1,6 @@
 import axios from 'axios'
 import qs from 'qs'
-import { localStorage } from 'quasar'
+import { LocalStorage } from 'quasar'
 
 export default ({ Vue }) => {
   if (!process.env.DEV) {
@@ -11,8 +11,15 @@ export default ({ Vue }) => {
 
   axios.withCredentials = true
 
-  axios.defaults.headers.common.Authorization = 'Bearer ' + localStorage.getItem('userkey')
-
+  axios.interceptors.request.use((config) => {
+    console.log('lanjieqi', LocalStorage.getItem('userkey'))
+    if (LocalStorage.getItem('userkey')) {
+      config.headers.userToken = 'Bearer ' + LocalStorage.getItem('userkey')
+      return config
+    }
+    return config
+  })
+  console.log('继续')
   axios.defaults.transformRequest = [function (data, headers) {
     return qs.stringify(data)
   }]

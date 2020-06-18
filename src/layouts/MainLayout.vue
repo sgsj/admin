@@ -37,6 +37,7 @@
           :key="link.title"
           v-bind="link"
         />
+        <q-btn label="退出" class="float-right text-white bg-black" flat @click="signOut()"/>
       </q-list>
     </q-drawer>
 
@@ -95,14 +96,14 @@ export default {
           caption: '@QuasarFramework',
           icon: 'public',
           link: 'https://facebook.quasar.dev'
-        },
-        {
-          title: 'Quasar Awesome',
-          caption: 'Community Quasar projects',
-          icon: 'favorite',
-          link: 'https://awesome.quasar.dev'
         }
       ]
+    }
+  },
+  methods: {
+    signOut () {
+      this.$q.localStorage.remove('userkey')
+      this.$router.push('/')
     }
   }
 }
