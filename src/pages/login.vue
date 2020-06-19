@@ -64,10 +64,8 @@ export default {
         } else {
           alert(response.data.msg)
         }
-        console.log(response)
-        // this.$store.state
       }).catch((response) => {
-
+        alert(response)
       })
     }
   }

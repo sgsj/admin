@@ -13,8 +13,9 @@ export default ({ Vue }) => {
 
   axios.interceptors.request.use((config) => {
     console.log('lanjieqi', LocalStorage.getItem('userkey'))
-    if (LocalStorage.getItem('userkey')) {
-      config.headers.userToken = 'Bearer ' + LocalStorage.getItem('userkey')
+    const tk = LocalStorage.getItem('userkey')
+    if (tk) {
+      config.headers.Authorization = 'Bearer ' + LocalStorage.getItem('userkey')
       return config
     }
     return config
