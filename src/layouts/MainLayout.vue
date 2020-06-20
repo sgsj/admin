@@ -15,7 +15,7 @@
           Quasar App
         </q-toolbar-title>
 
-        <div>Quasar v{{ $q.version }}</div>
+        <div>208281417@qq.com</div>
       </q-toolbar>
     </q-header>
 
@@ -62,10 +62,10 @@ export default {
       leftDrawerOpen: false,
       essentialLinks: [
         {
-          title: 'Docs',
+          title: '首页',
           caption: 'quasar.dev',
           icon: 'school',
-          link: 'https://quasar.dev'
+          link: '/index'
         },
         {
           title: '文章',

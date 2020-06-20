@@ -23,6 +23,9 @@
         </q-card-actions>
       </q-card>
     </div>
+
+    <q-btn label="测试" @click="test()"/>
+
     <!-- 删除提示 -->
     <q-dialog v-model="confirm" persistent>
       <q-card>
@@ -128,6 +131,15 @@ export default {
   },
   created: function () {
     Axios.get('admin/gettools').then((response) => {
+      if (response.data.code === 4) {
+        console.log(response.data)
+        const msg = response.data
+        this.$router.push({
+          path: '/',
+          name: 'Login',
+          params: msg
+        })
+      }
       // this.tools = response.data.tools
     })
   },
@@ -161,6 +173,10 @@ export default {
       this.addTooldata.brief = ''
       this.addTooldata.url = ''
       this.addToolForm = false
+    },
+    test () {
+      alert(new Date() / 1000)
+      alert(new Date())
     }
   }
 }

@@ -42,11 +42,22 @@
 <script>
 import Axios from 'axios'
 export default {
-  name: 'PageTool',
+  name: 'Login',
   data () {
     return {
       name: '',
       password: ''
+    }
+  },
+  mounted: function () {
+    if (this.$route.params.code) {
+      const _this = this
+      this.$q.notify({
+        message: _this.$route.params.message,
+        color: 'red',
+        position: 'center',
+        timeout: 3000
+      })
     }
   },
   methods: {
