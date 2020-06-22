@@ -49,9 +49,17 @@
             @reset="onCancel"
             class="q-gutter-md"
           >
-            <q-uploader
-              @added='imgUpload'
-            />
+            <q-uploader/>
+            <div class="row flex-center">
+              <div class="row col-5">
+                <!-- <q-btn icon="" label="本地图片"/> -->
+                <q-btn class="col-12 relative-position">
+                  本地图片
+                  <input type="file" name="image" id="" class="absolute" style="opacity: 0;">
+                </q-btn>
+              </div>
+              <q-btn class="col-5" label="图片库"/>
+            </div>
             <q-input
               type="text"
               v-model="addTooldata.name"
