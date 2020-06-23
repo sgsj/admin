@@ -50,15 +50,20 @@
             class="q-gutter-md"
           >
             <q-uploader/>
-            <div class="row flex-center">
-              <div class="row col-5">
-                <!-- <q-btn icon="" label="本地图片"/> -->
-                <q-btn class="col-12 relative-position">
-                  本地图片
-                  <input type="file" name="image" id="" class="absolute" style="opacity: 0;">
-                </q-btn>
+            <div class="row relative-position">
+              <div class="row col-12 col-m-6 flex justify-around">
+                <div class="row col-5">
+                  <!-- <q-btn icon="" label="本地图片"/> -->
+                  <q-btn class="col-12 relative-position" color="primary">
+                    本地图片
+                    <input type="file" name="image" id="imgfile" accept='image/*' @change="onChange()" class="absolute" style="opacity: 0;">
+                  </q-btn>
+                </div>
+                <q-btn class="col-5" color="primary" label="图片库" />
               </div>
-              <q-btn class="col-5" label="图片库"/>
+              <div class="row col-12">
+                <img class="col-6" :src="imgurl" alt="" srcset="">
+              </div>
             </div>
             <q-input
               type="text"
@@ -109,6 +114,7 @@ export default {
       confirm: false,
       operationIndex: null,
       addToolForm: false,
+      imgurl: null,
       addTooldata: {
         img: null,
         name: '',
@@ -167,8 +173,18 @@ export default {
       // re.test()
       return true
     },
-    imgUpload (list) {
-      console.log(list)
+    onChange (event) {
+      const e = event || window.event
+      console.log('wenjian:', e)
+      const img = e.target.files[0]
+      console.log('图片类型：', img.type)
+      const reader = new FileReader()
+      reader.readAsDataURL(img)
+      const that = this
+      reader.onload = function (e) {
+        console.log(e)
+        that.imgurl = e.target.result
+      }
     },
     onSubmit () {
       Axios.post('/addtool', this.addTooldata).then((response) => {
