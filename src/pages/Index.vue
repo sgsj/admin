@@ -51,7 +51,7 @@
           >
             <q-uploader/>
             <div class="row relative-position">
-              <div class="row col-12 col-m-6 flex justify-around">
+              <div class="row col-12 flex justify-around">
                 <div class="row col-5">
                   <!-- <q-btn icon="" label="本地图片"/> -->
                   <q-btn class="col-12 relative-position" color="primary">
@@ -61,9 +61,11 @@
                 </div>
                 <q-btn class="col-5" color="primary" label="图片库" />
               </div>
-              <div class="row col-12">
-                <img class="col-6" :src="imgurl" alt="" srcset="">
-              </div>
+              <q-img
+                :src="imgurl"
+              >
+                <q-btn icon="trash" color="" text-color="black" class="absolute-center"/>
+              </q-img>
             </div>
             <q-input
               type="text"
