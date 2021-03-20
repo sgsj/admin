@@ -18,13 +18,21 @@
           />
 
           <q-input
-            type="password"
+            :type="isPwd?'password':'text'"
             v-model="password"
             label="密码"
             :rules="[
               val => val.length > 0 || '请输入密码'
             ]"
-          />
+          >
+            <template v-slot:append>
+              <q-icon
+                :name="isPwd ? 'visibility_off' : 'visibility'"
+                class="cursor-pointer"
+                @click="isPwd = !isPwd"
+              />
+            </template>
+          </q-input>
 
           <q-btn label="忘记密码？" to="/findUser" class="text-body2 text-right" flat/>
 
@@ -46,7 +54,8 @@ export default {
   data () {
     return {
       name: '',
-      password: ''
+      password: '',
+      isPwd: true
     }
   },
   mounted: function () {
@@ -65,9 +74,13 @@ export default {
       this.$router.push('/register')
     },
     onSubmit () {
-      Axios.post('login/submit', {
-        name: this.name,
-        password: this.password
+      Axios({
+        url: '/admin/login',
+        method: 'post',
+        data: {
+          name: this.name,
+          password: this.password
+        }
       }).then((response) => {
         if (response.data.code === 200) {
           this.$q.localStorage.set('userkey', response.data.userkey)

@@ -11,6 +11,7 @@ export default ({ Vue }) => {
 
   axios.withCredentials = true
 
+//http request拦截
   axios.interceptors.request.use((config) => {
     console.log('lanjieqi', LocalStorage.getItem('userkey'))
     const tk = LocalStorage.getItem('userkey')
@@ -19,6 +20,8 @@ export default ({ Vue }) => {
       return config
     }
     return config
+  },error=>{
+    return Promise.reject(error);
   })
   console.log('继续')
   axios.defaults.transformRequest = [function (data, headers) {
