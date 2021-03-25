@@ -49,7 +49,12 @@
             @reset="onCancel"
             class="q-gutter-md"
           >
-            <q-uploader/>
+            <q-uploader
+              :factory="factoryFn"
+              auto-upload
+              @added="addFile"
+              @uploaded="upFile"
+            />
             <div class="row relative-position">
               <div class="row col-12 flex justify-around">
                 <div class="row col-5">
@@ -118,7 +123,7 @@ export default {
       addToolForm: false,
       imgurl: null,
       addTooldata: {
-        img: null,
+        files: null,
         name: '',
         brief: '',
         url: ''
@@ -146,7 +151,7 @@ export default {
     }
   },
   created: function () {
-    Axios.get('admin/gettools').then((response) => {
+    Axios.post('/admin/tool/get').then((response) => {
       if (response.data.code === 4) {
         console.log(response.data)
         const msg = response.data
@@ -175,6 +180,21 @@ export default {
       // re.test()
       return true
     },
+    factoryFn(file){
+      console.log("factoryFn>>>",file);
+      
+      return {
+        url: '/api/admin/tool/test',
+        method: 'POST'
+      }
+    },
+    addFile(file){
+      // this.addTooldata.files = file;
+    },
+    upFile(file,xhr){
+      console.log("upFile>>>",file,xhr);
+      this.addTooldata.files = file;
+    },
     onChange (event) {
       const e = event || window.event
       console.log('wenjian:', e)
@@ -189,7 +209,7 @@ export default {
       }
     },
     onSubmit () {
-      Axios.post('/addtool', this.addTooldata).then((response) => {
+      Axios.post('/admin/tool/add', this.addTooldata).then((response) => {
         console.log(response)
       })
       console.log('zhixing:submit')

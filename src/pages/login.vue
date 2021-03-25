@@ -86,10 +86,21 @@ export default {
           this.$q.localStorage.set('userkey', response.data.userkey)
           this.$router.push('/index')
         } else {
-          alert(response.data.msg)
+          this.$q.notify({
+            position: "top",
+            type: "warning",
+            textColor: "white",
+            message: response.data.msg,
+            timeout: 2000
+          });
         }
       }).catch((response) => {
-        alert(response)
+        console.log("err>>>",response);
+        this.$q.notify({
+          type: "warning",
+          textColor: "white",
+          message: response.data.msg
+        });
       })
     }
   }
