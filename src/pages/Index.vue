@@ -184,7 +184,7 @@ export default {
       console.log("factoryFn>>>",file);
       
       return {
-        url: '/api/admin/tool/test',
+        url: '/api/admin/tool/upload',
         method: 'POST'
       }
     },
