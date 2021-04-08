@@ -74,7 +74,7 @@
             </div>
             <q-input
               type="text"
-              v-model="addTooldata.name"
+              v-model="addTooldata.title"
               label="名称*"
               hint="填写工具名称"
               :rules="[
@@ -123,8 +123,8 @@ export default {
       addToolForm: false,
       imgurl: null,
       addTooldata: {
-        files: null,
-        name: '',
+        imgUrl: '',
+        title: '',
         brief: '',
         url: ''
       },
@@ -183,17 +183,25 @@ export default {
     factoryFn(file){
       console.log("factoryFn>>>",file);
       
-      return {
-        url: '/api/admin/tool/upload',
-        method: 'POST'
-      }
+      // return {
+      //   url: '/api/admin/tool/upload',
+      //   method: 'POST'
+      // }
+      return new Promise((res,rej)=>{
+        res({
+          url: '/api/admin/tool/upload',
+          method: 'POST'
+        })
+      })
     },
     addFile(file){
       // this.addTooldata.files = file;
     },
-    upFile(file,xhr){
-      console.log("upFile>>>",file,xhr);
-      this.addTooldata.files = file;
+    upFile(info){
+      let resData = JSON.parse(info.xhr.response);
+      console.log("upFile>>>",resData,info.xhr,info.xhr.response);
+      this.addTooldata['imgUrl'] = resData.data.fileUrl;
+      console.log("upFile-2>>>",this.addTooldata);
     },
     onChange (event) {
       const e = event || window.event
@@ -215,7 +223,7 @@ export default {
       console.log('zhixing:submit')
     },
     onCancel () {
-      this.addTooldata.name = ''
+      this.addTooldata.title = ''
       this.addTooldata.brief = ''
       this.addTooldata.url = ''
       this.addToolForm = false
