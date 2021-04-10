@@ -6,11 +6,10 @@
     <div class="row justify-around col">
       <q-card class="tool-item" bordered v-for="(tool , index) in tools" :key="tool.title" v-bind="tool" style="width: 232px;">
         <q-img
-          :src="tool.imgUrl"
+          :src="'/api'+tool.imgUrl"
         />
 
         <q-card-section>
-          <div class="text-overline text-orange-9">Overline</div>
           <div class="text-h5 q-mt-sm q-mb-xs">{{tool.title}}</div>
           <div class="text-caption text-grey">
             {{tool.brief}}
@@ -151,18 +150,7 @@ export default {
     }
   },
   created: function () {
-    Axios.post('/admin/tool/get').then((response) => {
-      if (response.data.code === 4) {
-        console.log(response.data)
-        const msg = response.data
-        this.$router.push({
-          path: '/',
-          name: 'Login',
-          params: msg
-        })
-      }
-      // this.tools = response.data.tools
-    })
+    this.getTools();
   },
   methods: {
     del (index) {
@@ -217,8 +205,13 @@ export default {
       }
     },
     onSubmit () {
-      Axios.post('/admin/tool/add', this.addTooldata).then((response) => {
-        console.log(response)
+      Axios.post('/admin/tool/add', this.addTooldata).then((res) => {
+        console.log(res)
+        let data = res.data;
+        if (data.code == 200) {
+          this.getTools();
+          this.addToolForm = false;
+        }
       })
       console.log('zhixing:submit')
     },
@@ -227,6 +220,20 @@ export default {
       this.addTooldata.brief = ''
       this.addTooldata.url = ''
       this.addToolForm = false
+    },
+    getTools(){
+      Axios.post('/admin/tool/get').then((res) => {
+        if (res.data.code === 4) {
+          console.log(res.data)
+          const msg = res.data
+          this.$router.push({
+            path: '/',
+            name: 'Login',
+            params: msg
+          })
+        }
+        this.tools = res.data.tools
+      })
     },
     test () {
       alert(new Date() / 1000)
