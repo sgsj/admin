@@ -1,16 +1,6 @@
 <template>
   <q-page class="flex flex-center">
-    <q-row></q-row>
-    <q-table :data="data"
-              :columns="columns"
-              :pagination.sync="page"
-              title="文章列表"
-              row-key="id"
-              style="width: 100%">
-      <template v-slot:top>
-        <q-btn color="primary" label="添加文章" to="articleList/add"/>
-      </template>
-    </q-table>
+    <q-btn flat color="primary" label="返回" icon="reply" @click="goBack"/>
     <textarea id="editor" name="edit_content"></textarea>
   </q-page>
 </template>
@@ -18,7 +8,7 @@
 <script>
 
 export default {
-  name: 'PageTool',
+  name: 'articleAdd',
   data(){
     return {
       columns: [
@@ -43,14 +33,7 @@ export default {
           align: 'center'
         },
       ],
-      data: [],
-      page: {
-        sortBy: 'desc',
-        descending: false,
-        page: 2,
-        rowsPerPage: 3
-        // rowsNumber: xx if getting data from a server
-      },
+      data: []
     }
   },
   mounted(){
@@ -62,6 +45,11 @@ export default {
         wellFormatMode : false
       });
     });
+  },
+  methods:{
+    goBack(){
+      this.$router.go(-1)
+    }
   }
 }
 </script>

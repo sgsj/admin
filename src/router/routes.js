@@ -14,7 +14,14 @@ const routes = [
     children: [
       { path: '', component: () => import('pages/Index.vue') },
       { path: '/tool', component: () => import('pages/tool.vue') },
-      { path: '/articleList', component: () => import('pages/articleList.vue') }
+      { 
+        path: '/articleList',
+        component: () => import('pages/articleList.vue'),
+        // children: [
+        //   { path: '/add', component: () => import('pages/articleAdd.vue') },
+        // ]
+      },
+      { path: '/articleList/add', component: () => import('pages/articleAdd.vue') },
     ]
   }
 ]
